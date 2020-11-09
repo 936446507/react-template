@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   getHomeDataRequest,
   setIsGettingHomeData,
-} from '../../store/action/home';
+} from 'src/store/action/home';
 
-import { StoreState } from '../../store/type';
+import { StoreState } from 'src/store/type';
+import Nav from 'src/components/nav';
+import 'src/assets/css/home.css'
 
 function Index() {
   const dispatch = useDispatch();
@@ -32,10 +34,16 @@ function Index() {
   }, [home]);
 
   return (
-    <div>
-      <p>home</p>
-      <p>count: {home.count}</p>
-      <button onClick={() => setIsGettingHomeState(true)}>+ 1</button>
+    <div className='home'>
+      <Nav />
+      <div className='home__count'>
+        <span>count: {home.count}</span>
+        <button
+          className='home__count--btn'
+          onClick={() => setIsGettingHomeState(true)}>
+          + 1
+        </button>
+      </div>
     </div>
   );
 }
