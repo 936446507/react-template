@@ -5,7 +5,7 @@
     "type": "write"
   },
   {
-    "path": "/pageage.json",
+    "path": "/package.json",
     "type": "write"
   }
 ],
