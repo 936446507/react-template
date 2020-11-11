@@ -46,6 +46,10 @@ module.exports = {
         loader: 'file-loader',
       },
       {
+        test: /\.svg$/,
+        loader: 'file-loader',
+      },
+      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
@@ -94,7 +98,9 @@ module.exports = {
   },
   plugins: [],
   resolve: {
-    alias: {},
+    alias: {
+      'src': path.resolve(__dirname, 'src')
+    },
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
 };
