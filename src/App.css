@@ -1,17 +1,3 @@
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .App img {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App {
   text-align: center;
   min-height: 100vh;
