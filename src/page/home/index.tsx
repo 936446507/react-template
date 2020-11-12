@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, useRef } from 'react';
 {{#if redux}}
+import React, { useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getHomeDataRequest,
@@ -7,7 +7,10 @@ import {
 } from 'src/store/action/home';
 
 import { StoreState } from 'src/store/type';
+{{else}}
+import React from 'react';
 {{/if}}
+
 import Nav from 'src/components/nav';
 import 'src/assets/css/home.css'
 
