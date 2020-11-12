@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback, useRef } from 'react';
+{{#if redux}}
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getHomeDataRequest,
@@ -6,10 +7,12 @@ import {
 } from 'src/store/action/home';
 
 import { StoreState } from 'src/store/type';
+{{/if}}
 import Nav from 'src/components/nav';
 import 'src/assets/css/home.css'
 
 function Index() {
+  {{#if redux}}
   const dispatch = useDispatch();
   const { isGettingHomeData, home } = useSelector(
     (state: StoreState) => state.home
@@ -32,10 +35,12 @@ function Index() {
   useEffect(() => {
     homeDataRef.current = home;
   }, [home]);
+  {{/if}}
 
   return (
     <div className='home'>
       <Nav />
+      {{#if redux}}
       <div className='home__count'>
         <span>count: {home.count}</span>
         <button
@@ -44,6 +49,7 @@ function Index() {
           + 1
         </button>
       </div>
+      {{/if}}
     </div>
   );
 }
