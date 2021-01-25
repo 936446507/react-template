@@ -5,7 +5,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const address = require('address');
-const { projectPath, outputPath, CopyShareImg } = require('./bz.config');
+const { projectPath, outputPath, CopyShareImg, publicPath } = require('./bz.config');
 
 /**
  * 获取 ip
@@ -39,6 +39,21 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: [
+              '@babel/plugin-transform-runtime',
+              '@babel/plugin-proposal-nullish-coalescing-operator',
+              '@babel/plugin-proposal-optional-chaining',
+            ],
+          },
+        },
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
         loader: 'ts-loader',
       },
       {
@@ -51,7 +66,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.(woff|woff2|jpg|png)$/,
@@ -67,19 +82,7 @@ module.exports = {
       {{#if less}}
       {
         test: /\.less$/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          { loader: 'css-loader', options: { sourceMap: false } },
-          {
-            loader: 'less-loader',
-            options: {
-              strictMath: true,
-              noIeCompat: true,
-            },
-          },
-        ],
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
       },
       {{/if}}
     ],
@@ -99,7 +102,7 @@ module.exports = {
   plugins: [],
   resolve: {
     alias: {
-      'src': path.resolve(__dirname, 'src')
+      'src': path.resolve(__dirname, './src')
     },
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
@@ -116,6 +119,7 @@ if (process.env.NODE_ENV !== 'production') {
       nodeEnv: process.env.NODE_ENV,
       inject: false,
       projectPath,
+      pagePath: publicPath,
     }),
   ]);
 } else {
@@ -140,6 +144,7 @@ if (process.env.NODE_ENV !== 'production') {
       nodeEnv: process.env.NODE_ENV,
       inject: false,
       projectPath,
+      pagePath: publicPath,
       bzConfigPath: 'https://source.bozhong.com/common/js/config.js',
     }),
     new CopyShareImg(),
