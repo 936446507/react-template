@@ -3,26 +3,23 @@ const { resolve } = require('path');
 const assert = require('assert');
 const shell = require('shelljs');
 
-
-const publicPath = '';
 {{#if_compare source '!==' 'not use'}}
+const publicPath = '';
 const projectPath = '';
 // exp: publicPath = '/wiki/' projectPath = '/activity/wiki/'
 {{else}}
+const publicPath = './';
 // exp: publicPath = '/wiki/'
 {{/if_compare}}
-
 {{#if_compare source '===' 'source'}}
 const sourcePath = process.env.npm_config_source;
 {{/if_compare}}
-
 {{#if_compare source '===' 'poco'}}
 const sourcePath = process.env.npm_config_poco_source;
 {{/if_compare}}
 
-
-{{#if_compare source '!==' 'not use'}}
 assert(publicPath, 'publicPath 填写项目发布地址的路径');
+{{#if_compare source '!==' 'not use'}}
 assert(projectPath, 'projectPath 填写项目打包输出的路径');
 if (typeof sourcePath === 'undefined') {
   {{#if_compare source '===' 'source'}}
