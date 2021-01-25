@@ -13,6 +13,16 @@ const outputPath = resolve(process.cwd(), `dist`);
 {{/if}}
 // exp: publicPath = '/wiki/' projectPath = '/activity/wiki/'
 
+{{#compare_eq source 'source'}}
+'source'
+{{else}}
+  {{#compare_eq source 'poco'}}
+  'poco'
+  {{else}}
+  'not use'
+  {{/compare_eq}}
+{{/compare_eq}}
+
 assert(publicPath, 'publicPath 填写项目发布地址的路径');
 assert(projectPath, 'projectPath 填写项目打包输出的路径');
 {{#if source}}
