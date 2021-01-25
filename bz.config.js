@@ -3,25 +3,23 @@ const { resolve } = require('path');
 const assert = require('assert');
 const shell = require('shelljs');
 
+
 const publicPath = '';
 {{#if_compare source '!==' 'not use'}}
 const projectPath = '';
+// exp: publicPath = '/wiki/' projectPath = '/activity/wiki/'
+{{else}}
+// exp: publicPath = '/wiki/'
 {{/if_compare}}
 
 {{#if_compare source '===' 'source'}}
 const sourcePath = process.env.npm_config_source;
-const outputPath = resolve(sourcePath, `.${projectPath}`);
 {{/if_compare}}
 
 {{#if_compare source '===' 'poco'}}
 const sourcePath = process.env.npm_config_poco_source;
-const outputPath = resolve(sourcePath, `.${projectPath}`);
 {{/if_compare}}
 
-{{#if_compare source '===' 'not use'}}
-const outputPath = resolve(process.cwd(), `dist`);
-{{/if_compare}}
-// exp: publicPath = '/wiki/' projectPath = '/activity/wiki/'
 
 {{#if_compare source '!==' 'not use'}}
 assert(publicPath, 'publicPath 填写项目发布地址的路径');
@@ -40,6 +38,12 @@ if (typeof sourcePath === 'undefined') {
 } else if (!existsSync(sourcePath)) {
   throw new Error('source根目录不存在，请检查配置的 source 根目录是否正确');
 }
+{{/if_compare}}
+
+{{#if_compare source '===' 'not use'}}
+const outputPath = resolve(process.cwd(), `dist`);
+{{else}}
+const outputPath = resolve(sourcePath, `.${projectPath}`);
 {{/if_compare}}
 /**
  * 将分享图复制到输出目录
